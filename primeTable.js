@@ -1,4 +1,18 @@
+const readline = require('readline');
+const fs = require('fs');
+const path = require('path');
 
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+  
+
+/**
+ * Generates and returns an array of N prime numbers 
+ * i.e: for numberOfPrimes = 3, returns [2, 3, 5]
+ * @param {*} numberOfPrimes 
+ */
 const generatePrimes = (numberOfPrimes) => {
 
     const result = [];
@@ -27,7 +41,11 @@ const generatePrimes = (numberOfPrimes) => {
     return result;
 }
 
-
+/**
+ * Generates and returns a 2-D array with the result of 
+ * multiplying generated prime numbers with each other.
+ * @param {*} numberOfPrimes 
+ */
 const generateTable = (numberOfPrimes) => {
     const primes = generatePrimes(numberOfPrimes);
     const table = [];
@@ -49,6 +67,23 @@ const generateTable = (numberOfPrimes) => {
 
     return table;
 }
+
+const generatePrimeNumberTables = () => { 
+    rl.question('Enter the number of primes: ', (numberOfPrimes) => {
+        const primeNumberTable = generateTable(numberOfPrimes);
+        
+        console.log(primeNumberTable);
+        
+        fs.writeFile(path.join(__dirname, '/results', `${numberOfPrimes}_Table.txt`), JSON.stringify(primeNumberTable), (err) => {
+            if(err)
+                console.log(err);
+        });
+        
+        rl.close();
+      });
+}
+
+generatePrimeNumberTables();
 
 module.exports = {
     generatePrimes,
