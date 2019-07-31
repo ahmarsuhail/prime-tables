@@ -4,6 +4,7 @@
   "description": "Node.js application to generate the product of N primes.",
   "main": "primeTable.js",
   "scripts": {
+    "start": "node primeTable.js",
     "test": "mocha"
   },
   "repository": {
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/ahmarsuhail/prime-tables#readme",
   "devDependencies": {
     "chai": "^4.2.0",
+    "chai-fs": "^2.0.0",
     "mocha": "^6.2.0"
   }
 }

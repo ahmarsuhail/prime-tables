@@ -42,43 +42,39 @@ const generatePrimes = (numberOfPrimes) => {
 }
 
 /**
- * Generates and returns a 2-D array with the result of 
+ * Generates a file in results folder with the result of 
  * multiplying generated prime numbers with each other.
  * @param {*} numberOfPrimes 
  */
 const generateTable = (numberOfPrimes) => {
     const primes = generatePrimes(numberOfPrimes);
-    const table = [];
+    const writeStream = fs.createWriteStream(path.join(__dirname, '/results', `${numberOfPrimes}_Table.txt`));
     
-    for(let i=0; i<primes.length; i++) {
-        let temp = [];
-        temp.push(primes[i]);
-        table.push(temp);
-    }
-
     primes.unshift(' ');
-    table.unshift(primes);
-
-    for(let i=1; i<table.length; i++) {
+    writeStream.write(primes.join(' | ') + '\n');
+    
+    for(let i=1; i<primes.length; i++) {
+        let primeTableRow = [];
+        primeTableRow.push(primes[i]);
         for(let j=1; j<primes.length; j++) {
-            table[i].push(table[i][0]*primes[j]);
+            primeTableRow.push(primes[i]*primes[j]);
         }
-    }
+        writeStream.write(primeTableRow.join(' | ') + '\n'); 
+      }
 
-    return table;
+      writeStream.end();
+
+      writeStream.on('finish', () => {
+          console.log("Done calculating, view results!")
+      })
 }
 
+/**
+ * Driver function, reads user input from console
+ */
 const generatePrimeNumberTables = () => { 
     rl.question('Enter the number of primes: ', (numberOfPrimes) => {
-        const primeNumberTable = generateTable(numberOfPrimes);
-        
-        console.log(primeNumberTable);
-        
-        fs.writeFile(path.join(__dirname, '/results', `${numberOfPrimes}_Table.txt`), JSON.stringify(primeNumberTable), (err) => {
-            if(err)
-                console.log(err);
-        });
-        
+        generateTable(numberOfPrimes);
         rl.close();
       });
 }

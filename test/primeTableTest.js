@@ -1,8 +1,12 @@
 const { generatePrimes, generateTable } = require('../primeTable')
 const primeNumberLists = require('./primeNumberLists.json');
-const primeNumberTables = require('./primeNumberTables');
+const path = require('path');
+const fs = require('fs');
+var chai = require('chai');
 const expect = require('chai').expect;
 const assert = require('assert');
+
+chai.use(require('chai-fs'));
 
 describe('Prime table generator', function () {
 
@@ -35,20 +39,16 @@ describe('Prime table generator', function () {
 
   describe('generateTable()', function () {
 
-    it('should generate table for first three prime numbers', function () {
-      threePrimesTable = generateTable(3);
-
-      for (let i = 0; i <= 3; i++) {
-        expect(primeNumberTables.threePrimesTable[i]).to.eql(threePrimesTable[i]);
-      }
+    it('should generate file with table for first three prime numbers', function () {
+      generateTable(3);
+      expect(path.join(__dirname, '../', 'results')).to.be.a.directory().and.not.empty;
+      expect(path.join(__dirname, '../', 'results')).to.be.a.directory().and.include.files(['3_Table.txt']);
     })
 
-    it('should generate table for first five prime numbers', function () {
-      fivePrimesTable = generateTable(5);
-
-      for (let i = 0; i <= 3; i++) {
-        expect(primeNumberTables.fivePrimesTable[i]).to.eql(fivePrimesTable[i]);
-      }
+    it('should generate file with table for first five prime numbers', function () {
+      generateTable(5);
+      expect(path.join(__dirname, '../', 'results')).to.be.a.directory().and.not.empty;
+      expect(path.join(__dirname, '../', 'results')).to.be.a.directory().and.include.files(['5_Table.txt']);
     })
 
   })
