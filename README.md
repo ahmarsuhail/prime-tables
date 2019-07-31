@@ -41,7 +41,7 @@ mutiplyAndWriteToDisk(primes, 0, primes.length/2)
 mutiplyAndWriteToDisk(primes, primes.length/2, primes.length)
 ``` 
 
-This would then write to two different miles & you can merge them together in the end.
+This would then write to two different files & you can merge them together in the end.
 
 Since Node.js uses a single thread, you would fork a new process using the child_process library.
 
