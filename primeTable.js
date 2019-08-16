@@ -19,6 +19,9 @@ const generatePrimes = (numberOfPrimes) => {
     const findPrimesTill = (numberOfPrimes < 4) ? 6: Math.round(numberOfPrimes * Math.log2(numberOfPrimes));
     const isPrime = new Array(findPrimesTill).fill(true);
     
+
+    console.log("HELLOO");
+
     for(let i=2; i<Math.sqrt(findPrimesTill); i++) {
         if(isPrime[i]) {
             for(let j=i; i*j<findPrimesTill; j++) {
